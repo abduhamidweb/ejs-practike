@@ -67,7 +67,7 @@ async function updateTask(value, id) {
 }
 
 function updateTasksList() {
-    let elUpdatBtn = document.querySelectorAll(".btn-danger")
+    let elUpdatBtn = document.querySelectorAll(".btn-danger");
     const task = document.querySelectorAll(".taskWrapper");
     task.forEach((task) => {
         task.addEventListener("click", (e) => {
@@ -97,7 +97,5 @@ function updateTasksList() {
 
         })
     })
-
-
 }
 updateTasksList()

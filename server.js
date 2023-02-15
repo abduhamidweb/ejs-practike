@@ -52,6 +52,7 @@ app.put("/update/:id", (req, res) => {
     const {
         task
     } = req.body
+    console.log('req.body :', req.body);
     const {
         id
     } = req.params

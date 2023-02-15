@@ -45,3 +45,53 @@ function DELETE(e) {
         location
     }) => location ? window.location = location : "/")
 }
+// Update the tasks list with time
+window.addEventListener("click", (e) => {
+
+})
+async function updateTask(value, id) {
+    const updateTaskFetch = await fetch(`http://localhost:3000/update${id}`, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            task: value
+        })
+    })
+}
+
+function updateTasksList() {
+    let elUpdatBtn = document.querySelectorAll(".btn-danger")
+    const task = document.querySelectorAll(".taskWrapper");
+    task.forEach((task) => {
+        task.addEventListener("click", (e) => {
+            let target = e.target.getAttribute("data-update");
+            if (e.target.classList.contains("taskWrapper")) {
+                let elInput = document.createElement("input");
+                elInput.setAttribute("class", "taskWrapper taskInput")
+                elInput.type = "text";
+                elInput.value = task.textContent;
+                task.parentNode.replaceChild(elInput, task);
+                elInput.focus();
+            }
+            elUpdatBtn.forEach((el) => {
+                if (el.getAttribute("data-id") == target) {
+                    el.setAttribute("class", "btn btn-info btn-delete mt-2 mb-2");
+                    el.removeAttribute("data-id");
+                    el.setAttribute("data-id2", target)
+                    el.innerHTML = `<i class="bi bi-check2"></i>`
+                    el.addEventListener("click", () => {
+                        let inputValue = document.querySelector(".taskInput").value.trim()
+                        if (inputValue) {
+                            updateTask(inputValue, target)
+                        }
+                    })
+                }
+            })
+
+        })
+    })
+
+
+}
+updateTasksList()

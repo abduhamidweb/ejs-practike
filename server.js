@@ -41,12 +41,14 @@ app.post("/todo", (req, res) => {
     })
 });
 app.delete("/todos/:id", (req, res) => {
-    console.log(req.params.id);
     datas = datas.filter((u) => u.id != req.params.id);
     fs.writeFileSync(process.cwd() + "/data/datas.json", JSON.stringify(datas, null, 4));
     res.send({
         status: 200,
         location: "/"
     })
+});
+app.put("/update/:id", (req, res) => {
+    console.log(req.body);
 })
 app.listen(3000, console.log("port", 3000));

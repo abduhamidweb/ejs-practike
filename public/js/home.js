@@ -2,10 +2,10 @@ const elBtn = document.querySelectorAll(".btn-delete")
 async function POST() {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        window.location.reload()
+        // window.location.reload()
         try {
             if (inputTime.value.trim().length > 0 && inputTask.value.trim().length > 0) {
-                fetch("http://localhost:3000", {
+                fetch("http://localhost:3000/todo", {
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -14,7 +14,10 @@ async function POST() {
                         time: inputTime.value.trim(),
                         task: inputTask.value.trim()
                     })
-                });
+                }).then((response) => response.json()).then(({
+                    status,
+                    location
+                }) => location ? window.location = location : "/")
                 inputTime.value = "";
                 inputTask.value = "";
             } else {
@@ -37,6 +40,8 @@ elBtn.forEach(item => {
 function DELETE(e) {
     fetch("http://localhost:3000/todos/" + e, {
         method: "DELETE"
-    })
-    window.location.reload()
+    }).then((response) => response.json()).then(({
+        status,
+        location
+    }) => location ? window.location = location : "/")
 }

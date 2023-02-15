@@ -24,25 +24,29 @@ app.get("/", (req, res) => {
         test: "12"
     })
 });
-app.post("/", (req, res) => {
-    req.body.id = datas.length ? datas[datas.length - 1].id + 1 : 1;
-    datas.push(req.body)
-    console.log('req.body :', req.body);
-    fs.writeFileSync(process.cwd() + "/data/datas.json", JSON.stringify(datas, null, 4));
+app.get("/home", (req, res) => {
     res.render(viewPath("index"), {
         title: "Todo",
         todos: datas,
-        test: "111"
+        test: "12"
+    })
+});
+app.post("/todo", (req, res) => {
+    req.body.id = datas.length ? datas[datas.length - 1].id + 1 : 1;
+    datas.push(req.body)
+    fs.writeFileSync(process.cwd() + "/data/datas.json", JSON.stringify(datas, null, 4));
+    res.send({
+        status: 200,
+        location: "/"
     })
 });
 app.delete("/todos/:id", (req, res) => {
     console.log(req.params.id);
     datas = datas.filter((u) => u.id != req.params.id);
     fs.writeFileSync(process.cwd() + "/data/datas.json", JSON.stringify(datas, null, 4));
-    res.render(viewPath("index"), {
-        title: "Todo",
-        todos: datas,
-        test: "12"
+    res.send({
+        status: 200,
+        location: "/"
     })
     //   users = users.filter((u) => u.id != req.params.id);
     //   fs.writeFileSync("./data/users.json", JSON.stringify(users, null, 4));

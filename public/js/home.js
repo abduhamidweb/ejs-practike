@@ -50,7 +50,8 @@ window.addEventListener("click", (e) => {
 
 })
 async function updateTask(value, id) {
-    const updateTaskFetch = await fetch(`http://localhost:3000/update${id}`, {
+    const updateTaskFetch = await fetch(`http://localhost:3000/update/${id}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
@@ -58,6 +59,11 @@ async function updateTask(value, id) {
             task: value
         })
     })
+    const {
+        status,
+        location
+    } = await updateTaskFetch.json()
+    location ? window.location = location : "/"
 }
 
 function updateTasksList() {

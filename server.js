@@ -49,6 +49,28 @@ app.delete("/todos/:id", (req, res) => {
     })
 });
 app.put("/update/:id", (req, res) => {
-    console.log(req.body);
+    const {
+        task
+    } = req.body
+    const {
+        id
+    } = req.params
+    if (!datas.find(el => el.id == id)) {
+        res.send("Bu idlik telefon yo'q")
+        return
+    }
+    datas = datas.map(todo => {
+        if (todo.id == id) {
+            todo.task = task ? task : todo.task
+            return todo
+        } else {
+            return todo
+        }
+    });
+    fs.writeFileSync(process.cwd() + "/data/datas.json", JSON.stringify(datas, null, 4));
+    res.send({
+        status: 200,
+        location: "/"
+    })
 })
 app.listen(3000, console.log("port", 3000));

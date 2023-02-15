@@ -4,7 +4,15 @@ import path from "path";
 import cors from "cors";
 let app = express();
 let datas = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "datas.json")))
-// datas = JSON.parse(datas)
+datas = datas.sort((a, b) => {
+    if (a.time < b.time) {
+        return -1;
+    } else if (a.time > b.time) {
+        return 1;
+    } else {
+        return 0;
+    }
+});
 let viewPath = (fileName) => {
     return path.join(process.cwd(), "public", "views", fileName + ".ejs");
 };
@@ -18,13 +26,34 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use(express.json());
 // GET method for getting the content of the application
 app.get("/", (req, res) => {
+    datas = datas.sort((a, b) => {
+        if (a.time < b.time) {
+            return -1;
+        } else if (a.time > b.time) {
+            return 1;
+        } else {
+            return 0;
+        }
+    })
     res.render(viewPath("index"), {
         title: "Todo",
         todos: datas,
         test: "12"
     })
 });
+app.get("/todos", (req, res) => {
+    res.end(JSON.stringify(datas))
+})
 app.get("/home", (req, res) => {
+    datas = datas.sort((a, b) => {
+        if (a.time < b.time) {
+            return -1;
+        } else if (a.time > b.time) {
+            return 1;
+        } else {
+            return 0;
+        }
+    })
     res.render(viewPath("index"), {
         title: "Todo",
         todos: datas,
@@ -32,6 +61,7 @@ app.get("/home", (req, res) => {
     })
 });
 app.post("/todo", (req, res) => {
+
     req.body.id = datas.length ? datas[datas.length - 1].id + 1 : 1;
     datas.push(req.body)
     fs.writeFileSync(process.cwd() + "/data/datas.json", JSON.stringify(datas, null, 4));
@@ -41,6 +71,15 @@ app.post("/todo", (req, res) => {
     })
 });
 app.delete("/todos/:id", (req, res) => {
+    datas = datas.sort((a, b) => {
+        if (a.time < b.time) {
+            return -1;
+        } else if (a.time > b.time) {
+            return 1;
+        } else {
+            return 0;
+        }
+    })
     datas = datas.filter((u) => u.id != req.params.id);
     fs.writeFileSync(process.cwd() + "/data/datas.json", JSON.stringify(datas, null, 4));
     res.send({

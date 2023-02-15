@@ -1,4 +1,40 @@
-const elBtn = document.querySelectorAll(".btn-delete")
+const elBtn = document.querySelectorAll(".btn-delete");
+// async function GET() {
+//     const data = await fetch(`http://localhost:3000/todos`);
+//     const res = await data.json();
+//     renderData(res)
+// }
+// GET();
+
+// function renderData(data = []) {
+//    data=   data.sort((a, b) => {
+//           if (a.time < b.time) {
+//               return -1;
+//           } else if (a.time > b.time) {
+//               return 1;
+//           } else {
+//               return 0;
+//           }
+//       });
+     
+//     data ? data.map(todo => {
+//         let div = document.createElement("div");
+//         div.innerHTML = `
+//                    <div
+//                     class="todo d-flex align-items-center mb-2 justify-content-between flex-wrap form-control p-3 todoWrapper">
+//                     <div class="time mr-2 mt-2 mb-2 timeWrapper" data-update="${todo.id}">
+//                     ${todo.time}
+//                     </div>
+//                     <div class="task mr-auto mt-2 mb-2 taskWrapper" data-update="${todo.id}">
+//                        ${todo.task}
+//                     </div>
+//                     <button class="btn btn-danger btn-delete mt-2 mb-2" data-id="${todo.id}">&times;</button>
+//                 </div>
+//         `
+//         todoList.appendChild(div)
+//     }) : "";
+
+// }
 async function POST() {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -45,10 +81,6 @@ function DELETE(e) {
         location
     }) => location ? window.location = location : "/")
 }
-// Update the tasks list with time
-window.addEventListener("click", (e) => {
-
-})
 async function updateTask(value, id) {
     const updateTaskFetch = await fetch(`http://localhost:3000/update/${id}`, {
         method: "PUT",

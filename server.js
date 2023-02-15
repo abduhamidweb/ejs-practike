@@ -48,18 +48,5 @@ app.delete("/todos/:id", (req, res) => {
         status: 200,
         location: "/"
     })
-    //   users = users.filter((u) => u.id != req.params.id);
-    //   fs.writeFileSync("./data/users.json", JSON.stringify(users, null, 4));
-    //   res.render(viewPath("users"), {
-    //       title: "Users",
-    //       users
-    //   });
 })
 app.listen(3000, console.log("port", 3000));
-// users.forEach((u) => {
-//     if (u.username == username && u.email == email) {
-//         res.send({
-//             location: "users"
-//         });
-//     }
-// });

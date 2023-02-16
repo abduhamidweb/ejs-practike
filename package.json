@@ -2,7 +2,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "ejs": "^3.1.6",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0"
   },
   "name": "8-dars-uyga-vazifa",
   "version": "1.0.0",

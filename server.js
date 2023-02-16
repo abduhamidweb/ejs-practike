@@ -2,7 +2,12 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import cors from "cors";
+import jwt from "jsonwebtoken"
+var token = jwt.sign({
+    foo: 'bar'
+}, 'shhhhh');
 let app = express();
+
 let datas = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "datas.json")))
 datas = datas.sort((a, b) => {
     if (a.time < b.time) {
@@ -26,21 +31,22 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use(express.json());
 // GET method for getting the content of the application
 app.get("/", (req, res) => {
-    datas = datas.sort((a, b) => {
-        if (a.time < b.time) {
-            return -1;
-        } else if (a.time > b.time) {
-            return 1;
-        } else {
-            return 0;
-        }
-    })
+    
+    // datas = datas.sort((a, b) => {
+    //     if (a.time < b.time) {
+    //         return -1;
+    //     } else if (a.time > b.time) {
+    //         return 1;
+    //     } else {
+    //         return 0;
+    //     }
+    // })
 
-    res.render(viewPath("index"), {
-        title: "Todo",
-        todos: datas,
-        test: "12"
-    })
+    // res.render(viewPath("index"), {
+    //     title: "Todo",
+    //     todos: datas,
+    //     test: "12"
+    // })
 });
 app.get("/todos", (req, res) => {
     res.end(JSON.stringify(datas))

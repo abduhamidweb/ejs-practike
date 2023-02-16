@@ -1,46 +1,5 @@
-import express from "express";
-import fs from "fs";
-import path from "path";
-import cors from "cors";
-let app = express();
-let datas = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "datas.json")))
-datas = datas.sort((a, b) => {
-    if (a.time < b.time) {
-        return -1;
-    } else if (a.time > b.time) {
-        return 1;
-    } else {
-        return 0;
-    }
-});
-let viewPath = (fileName) => {
-    return path.join(process.cwd(), "public", "views", fileName + ".ejs");
-};
-// set the view engine to ejs
-app.use(cors("*"));
-app.set("view engine", "ejs");
-app.use(express.urlencoded({
-    extended: true
-}));
-app.use(express.static(path.join(process.cwd(), "public")));
-app.use(express.json());
 // GET method for getting the content of the application
-app.get("/", (req, res) => {
-    datas = datas.sort((a, b) => {
-        if (a.time < b.time) {
-            return -1;
-        } else if (a.time > b.time) {
-            return 1;
-        } else {
-            return 0;
-        }
-    })
-
-    res.render(viewPath("index"), {
-        title: "Todo",
-        todos: datas,
-        test: "12"
-    })
+app.get("/", checkAuth, (req, res) => {
 });
 app.get("/todos", (req, res) => {
     res.end(JSON.stringify(datas))
@@ -114,4 +73,3 @@ app.put("/update/:id", (req, res) => {
         location: "/"
     })
 })
-app.listen(3000, console.log("port", 3000));
